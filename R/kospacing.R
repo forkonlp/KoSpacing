@@ -5,8 +5,7 @@
 #' @return auto-spaced korean sentences
 #'
 #' @export
-#' @import hashmap
-#' @importFrom rstudioapi restartSession
+#' @importFrom reticulate use_condaenv
 spacing <- function(ko_sents) {
   envnm <- "r-kospacing"
   if (!check_conda_set()){
@@ -43,32 +42,26 @@ spacing <- function(ko_sents) {
   return(ress)
 }
 
-
-
 sent_to_matrix <- function(ko_sent) {
-  c2idx <- get("c2idx", envir = .KoSpacingEnv)
+  Hash <- get("Hash", envir = .KoSpacingEnv)
   ko_sent_ <- paste0('\u00ab', ko_sent, '\u00bb')
   ko_sent_ <- gsub('\\s', '^', ko_sent_)
 
   #encoding and padding
   encoded <-
     sapply(strsplit(enc2utf8(ko_sent_), split = '')[[1]], function(x) {
-      if (c2idx$has_key(x)) {
-        ret <- c2idx[[x]]
-      } else{
-        ret <- c2idx[['__ETC__']]
-      }
+      ret <- Hash[[x]]
+      if (is.null(ret))
+        ret <- Hash[["__ETC__"]]
       ret
     })
 
-  mat <- matrix(data = c2idx[['__PAD__']],
+  mat <- matrix(data = Hash[['__PAD__']],
                 nrow = 1,
                 ncol = 200)
   mat[, 1:length(encoded)] <-  encoded
   return(mat)
 }
-
-
 
 make_pred_sent <- function(raw_sent, spacing_mat) {
   raw_sent <- paste0('\u00ab', raw_sent, '\u00bb')

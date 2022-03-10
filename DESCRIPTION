@@ -17,10 +17,8 @@ Description: Automatic word spacing contributes to preprocessing of morphologica
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Imports:
     keras,
-    hashmap,
     reticulate,
     rstudioapi
-Remotes: nathan-russell/hashmap

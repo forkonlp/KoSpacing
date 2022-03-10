@@ -1,4 +1,5 @@
 #' @importFrom reticulate import import_builtins py_module_available use_condaenv conda_create conda_install conda_list
+#' @importFrom rstudioapi restartSession
 install_conda_packages <- function() {
   envnm <- 'r-kospacing'
 
@@ -40,14 +41,17 @@ check_model <- function() {
 }
 
 #' @importFrom keras load_model_hdf5
-#' @importFrom hashmap load_hashmap
 set_model <- function() {
   w2idx <-
     file.path(system.file(package = "KoSpacing"), "model", 'w2idx')
 
-  w2idx_tbl <- hashmap::load_hashmap(w2idx)
+  w2idx_tbl <- readRDS(w2idx)
 
-  assign("c2idx", w2idx_tbl, envir = .KoSpacingEnv)
+  Hash <- sapply(unique(w2idx_tbl$Keys), function(x) {
+    w2idx_tbl[w2idx_tbl$Keys == x, 2]
+  }, simplify = FALSE)
+
+  assign("Hash", Hash, envir = .KoSpacingEnv)
 
   model_file <-
     file.path(system.file(package = "KoSpacing"), "model", 'kospacing')
