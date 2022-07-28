@@ -3,3 +3,4 @@
 README.md
 arch.png
 ^README\.Rmd$
+^\.github$

@@ -1,5 +1,4 @@
 #' @importFrom reticulate import import_builtins py_module_available use_condaenv conda_create conda_install conda_list
-#' @importFrom rstudioapi restartSession
 install_conda_packages <- function() {
   envnm <- 'r-kospacing'
 
@@ -18,9 +17,6 @@ install_conda_packages <- function() {
   }
 
   cat("\nInstallation complete.\n\n")
-
-  if (rstudioapi::hasFun("restartSession"))
-    rstudioapi::restartSession("library(KoSpacing)")
   invisible(NULL)
 }
 
@@ -32,15 +28,10 @@ check_env <- function() {
 
 check_model <- function() {
   chk <- try(get("model", envir = .KoSpacingEnv), silent = T)
-  if (class(chk)[1] == "try-error") {
-    res <- F
-  } else {
-    res <- T
-  }
-  return(res)
+  return(!inherits(chk, "try-error"))
 }
 
-#' @importFrom keras load_model_hdf5
+#' @importFrom reticulate import
 set_model <- function() {
   w2idx <-
     file.path(system.file(package = "KoSpacing"), "model", 'w2idx')
@@ -56,11 +47,13 @@ set_model <- function() {
   model_file <-
     file.path(system.file(package = "KoSpacing"), "model", 'kospacing')
 
-  model <- keras::load_model_hdf5(model_file, compile = FALSE)
-  packageStartupMessage("loaded KoSpacing model!")
+  # model <- keras::load_model_hdf5(model_file, compile = FALSE)
+  keras <- reticulate::import("keras")
+  model <- keras$models$load_model(model_file, compile = FALSE)
   assign("model", model, envir = .KoSpacingEnv)
-}
 
+  packageStartupMessage("loaded KoSpacing model!")
+}
 
 check_conda_set <- function() {
   envnm <- 'r-kospacing'
@@ -69,14 +62,10 @@ check_conda_set <- function() {
   return(!inherits(chk, "try-error"))
 }
 
-#' Create Conda Env named r-kospacing
-#'
 #' @importFrom reticulate conda_create
-#' @export
 set_env <- function() {
   reticulate::conda_create("r-kospacing",
                            # python_version = "3.6",
-                           packages = c("python=3.6","numpy=1.16.5"),
-                          )
+                           packages = c("python=3.6", "numpy=1.16.5"),)
   install_conda_packages()
 }

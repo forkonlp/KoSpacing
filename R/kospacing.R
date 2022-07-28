@@ -8,14 +8,11 @@
 #' @importFrom reticulate use_condaenv
 spacing <- function(ko_sents) {
   envnm <- "r-kospacing"
-  if (!check_conda_set()){
-    stop("Please create_conda_env() first.")
-  }
   reticulate::use_condaenv(envnm, required = TRUE)
   if (!check_env()) {
     stop("Please set_env() first.")
   }
-  if (!check_model()){
+  if (!check_model()) {
     set_model()
   }
   model <- get("model", envir = .KoSpacingEnv)
