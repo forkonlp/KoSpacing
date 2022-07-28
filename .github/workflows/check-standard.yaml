@@ -41,6 +41,6 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: rcmdcheck
+          extra-packages: cran/reticulate@1.22, rcmdcheck
 
       - uses: r-lib/actions/check-r-package@v1
