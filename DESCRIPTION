@@ -21,7 +21,7 @@ RoxygenNote: 7.1.2
 Depends:
     reticulate (== 1.22)
 Imports:
-    reticulate
+    reticulate (== 1.22)
 Suggests: 
     usethis,
     testthat (>= 3.0.0)
