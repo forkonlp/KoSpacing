@@ -55,13 +55,19 @@ Common sense, the first is the right answer.
 
 #### Install
 
-To install from GitHub, use
+KoSpacing depends on {reticulate} (== 1.22).
+Need to install 1.22 version, use
 
 ```
-install.packages('remotes')
-remotes::install_github('haven-jeon/KoSpacing')
+install.packages("remotes")
+remotes::install_version("reticulate", version = "1.22")
+```
+
+To install dev version, use
+
+```
+remotes::install_github('forkonlp/KoSpacing', upgrade = "never")
 library(KoSpacing)
-set_env()
 ```
 
 #### Example 

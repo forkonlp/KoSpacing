@@ -42,23 +42,28 @@ Park](https://github.com/mrchypark)).
 | Sejong(colloquial style) Corpus(1M) | 97.1%    |
 | OOOO(literary style) Corpus(3M)     | 94.3%    |
 
--   Accuracy = \# correctly spaced characters/\# characters in the test
+-   Accuracy = \# correctly spaced characters/# characters in the test
     data.
     -   Might be increased performance if normalize compound words.
 
 #### Install
 
-To install from GitHub, use
+KoSpacing depends on {reticulate} (== 1.22). Need to install 1.22
+version, use
 
-    install.packages('remotes')
-    remotes::install_github('haven-jeon/KoSpacing')
+    install.packages("remotes")
+    remotes::install_version("reticulate", version = "1.22")
+
+To install dev version, use
+
+    remotes::install_github('forkonlp/KoSpacing', upgrade = "never")
     library(KoSpacing)
-    set_env()
 
 #### Example
 
 ``` r
 library(KoSpacing)
+#> Loading required package: reticulate
 #> If you install package first fime,
 #> Please set_env() run before using spacing()
 spacing("김형호영화시장분석가는'1987'의네이버영화정보네티즌10점평에서언급된단어들을지난해12월27일부터올해1월10일까지통계프로그램R과KoNLP패키지로텍스트마이닝하여분석했다.")

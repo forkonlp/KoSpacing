@@ -8,7 +8,3 @@
   reticulate::use_condaenv("r-kospacing", required = TRUE)
 }
 
-.onAttach <- function(libname, pkgname){
-  packageStartupMessage("If you install package first fime, ")
-  packageStartupMessage("Please set_env() run before using spacing()")
-}
