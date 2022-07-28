@@ -66,12 +66,7 @@ check_conda_set <- function() {
   envnm <- 'r-kospacing'
   chk <-
     try(reticulate::use_condaenv(envnm, required = TRUE), silent = T)
-  if (class(chk) == "try-error") {
-    res <- F
-  } else {
-    res <- T
-  }
-  return(res)
+  return(!inherits(chk, "try-error"))
 }
 
 #' Create Conda Env named r-kospacing
