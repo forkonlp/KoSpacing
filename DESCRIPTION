@@ -18,8 +18,10 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
-Imports:
+Depends:
     reticulate (== 1.22)
+Imports:
+    reticulate
 Suggests: 
     usethis,
     testthat (>= 3.0.0)
